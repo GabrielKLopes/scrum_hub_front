@@ -1,9 +1,10 @@
-// components/Layout.jsx
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import { LayoutProps } from '../interface/user';
 
-const Layout = ({ children }) => {
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {

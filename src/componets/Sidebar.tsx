@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         <div className={`ml-3 text-white ${!isOpen ? 'hidden' : 'flex'}`}>
           <p className="text-lg">Nome Fictício</p>
-          <p className="text-sm">Tipo: Adm</p>
+          <p className="text-sm">Tipo: Admin</p>
         </div>
       </div>
     </div>

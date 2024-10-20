@@ -60,7 +60,7 @@ export const Login: React.FC = () => {
       setNotificationType("success");
       setNotificationVisible(true);
       setTimeout(() => {
-        navigate("/register");
+        navigate("/home");
       }, 2000);
     } catch (error) {
         const errorMessage = (error as Error).message;

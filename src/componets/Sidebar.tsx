@@ -2,8 +2,7 @@ import React from 'react';
 import { FaHome } from 'react-icons/fa';
 import { SidebarProps } from '../interface/user';
 
-
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => { 
   return (
     <div
       className={`relative bg-customBg h-screen flex flex-col items-center p-4 transition-all duration-300 ${

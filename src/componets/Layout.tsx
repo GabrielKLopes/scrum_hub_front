@@ -3,7 +3,6 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { LayoutProps } from '../interface/user';
 
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-customInput">
-      <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar isOpen={isOpen} />
 
       <div className="flex-1 flex flex-col">
         <Navbar toggleSidebar={toggleSidebar} />

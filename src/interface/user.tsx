@@ -17,7 +17,6 @@ export interface ErrorResponse {
 
 export interface SidebarProps {
     isOpen: boolean; 
-    toggleSidebar: () => void;
 }
 export interface LayoutProps {
     children: ReactNode; 

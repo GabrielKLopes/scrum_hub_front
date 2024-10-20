@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export interface IRegisterUser{
     name: string
     email: string
@@ -11,4 +13,16 @@ export interface ILoginUser{
 
 export interface ErrorResponse {
     message: string; 
+  }
+
+export interface SidebarProps {
+    isOpen: boolean; 
+    toggleSidebar: () => void;
+}
+export interface LayoutProps {
+    children: ReactNode; 
+  }
+  
+export interface NavbarProps {
+    toggleSidebar: () => void; 
   }

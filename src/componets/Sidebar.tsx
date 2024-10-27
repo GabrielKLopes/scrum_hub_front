@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaPeopleArrows, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaHome, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { FaGear } from 'react-icons/fa6';
 import { SidebarProps } from '../interface/components';
 import { getUserDataFromToken } from '../service/tokenService';

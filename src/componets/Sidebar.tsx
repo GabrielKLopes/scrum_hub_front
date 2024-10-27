@@ -28,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
     <div
       className={`bg-customBg h-screen flex flex-col items-center p-4 duration-300 ${
         isOpen ? 'w-64' : 'w-24'
-      } shadow-xl hidden md:flex`} // <-- Oculte o Sidebar em telas pequenas
+      } shadow-xl hidden md:flex`}
       style={{
         paddingTop: '4rem',
         transition: 'width 0.3s ease, padding 0.3s ease',

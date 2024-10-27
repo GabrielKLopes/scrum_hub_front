@@ -6,6 +6,12 @@ export const LoginUser = {
   login: async (loginUser: ILoginUser) => {
     try {
       const response = await api.post('/session/authentication', loginUser);
+
+      const token = response.data.token;
+      if (token) {
+        localStorage.setItem('tokenSecurity', token);
+      }
+
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

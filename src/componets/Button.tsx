@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps{
     onClick?: () => void;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     className?:string;
     disabled?: boolean; 
 

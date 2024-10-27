@@ -9,6 +9,8 @@ export default {
         customBg: '#121212',
         customInput: '#1e1e1e',
         customButton:'#B30013',
+        customBgLight: '#F1F1F1',
+        customBgLight2: '#D1D1D1',
         customColor1: '#160b00',
         customColor2: '#c26b00',
         customColor3: '#7a4400',

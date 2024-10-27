@@ -127,7 +127,11 @@ export const Register: React.FC = () => {
     }
   };
   
-
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleRegister(); 
+    }
+  };
   return (
     <div className="w-full min-h-screen bg-customBg relative">
       <div className="flex items-center justify-center min-h-screen relative">
@@ -151,6 +155,7 @@ export const Register: React.FC = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Digite seu nome completo"
               label="Nome"
+              onKeyDown={handleKeyDown} 
             />
             <InputForm
               type="email"
@@ -158,6 +163,7 @@ export const Register: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite seu email"
               label="Email"
+              onKeyDown={handleKeyDown} 
             />
             <div className="relative">
               <InputForm
@@ -166,6 +172,7 @@ export const Register: React.FC = () => {
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 placeholder="Digite sua senha"
                 label="Senha"
+                onKeyDown={handleKeyDown} 
               />
               <button
                 type="button"
@@ -213,6 +220,7 @@ export const Register: React.FC = () => {
                 value={confirmPassword}
                 onChange={(e) => handleConfirmPasswordChange(e.target.value)}
                 type="password"
+                onKeyDown={handleKeyDown} 
               />
               {!passwordsMatch && (
                 <p className="text-red-500 text-sm mt-1">As senhas não coincidem.</p>

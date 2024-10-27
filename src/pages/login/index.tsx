@@ -85,10 +85,15 @@ export const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleLogin(); 
+    }
+  };
   return (
     <div className="w-full min-h-screen bg-customBg">
       <div className="flex items-center justify-center min-h-screen relative">
-        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-white bg-opacity-5 rounded-lg">
+        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-customBg bg-opacity-5 shadow-2xl rounded-lg">
           <img
             src={logoOrange}
             alt="Logo Orange"
@@ -104,6 +109,8 @@ export const Login: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite seu email"
               label="Email"
+              onKeyDown={handleKeyDown} 
+
             />
 
             <div className="relative">
@@ -113,6 +120,8 @@ export const Login: React.FC = () => {
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 placeholder="Digite sua senha"
                 label="Senha"
+                onKeyDown={handleKeyDown} 
+
               />
               <button
                 type="button"

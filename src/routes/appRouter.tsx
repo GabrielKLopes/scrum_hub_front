@@ -6,6 +6,8 @@ import { Home } from '../pages/home';
 import ProtectedRoute from './ProtectedRoute'; 
 import Settings from '../pages/settings';
 import User from '../pages/user';
+import CreateUserPage from '../pages/user/createUser';
+import DetailsUser from '../pages/user/detailsUser';
 
 export const AppRouter: React.FC = () => {
   return (
@@ -23,7 +25,9 @@ export const AppRouter: React.FC = () => {
         /> 
         <Route path="/settings" element={<Settings/>}/>
         <Route path="/users" element={<User/>}/>
-      </Routes>
+        <Route path="/create-user" element={<CreateUserPage />} />
+        <Route path="/details-user/:id" element={<DetailsUser />} />
+        </Routes>
     </Router>
   );
 };

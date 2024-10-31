@@ -66,3 +66,11 @@ export interface IUserCreate {
 }
 
 
+export interface IUserUpdate {
+  name?: string; 
+  email?: string;
+  password?: string;
+  permissionUser_id?: number;
+  permission_id?: number;
+  squad_id?: number;
+}

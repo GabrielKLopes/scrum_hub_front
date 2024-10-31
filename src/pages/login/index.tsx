@@ -91,16 +91,16 @@ export const Login: React.FC = () => {
     }
   };
   return (
-    <div className="w-full min-h-screen bg-customBg">
+    <div className="w-full min-h-screen bg-customBgLight3">
       <div className="flex items-center justify-center min-h-screen relative">
-        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-customBg bg-opacity-5 shadow-2xl rounded-lg">
+        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-customBgLight2  shadow-2xl rounded-lg">
           <img
             src={logoOrange}
             alt="Logo Orange"
             className="absolute top-4 left-4 w-32 h-32"
           />
           <div className="w-full">
-            <h1 className="text-center text-4xl mb-10 font-semibold text-orange-500">
+            <h1 className="text-center text-4xl mb-10 font-semibold text-orange-700">
               Bem-vindo
             </h1>
             <InputForm
@@ -129,15 +129,15 @@ export const Login: React.FC = () => {
                 className="absolute inset-y-0 right-0 pr-3 pt-6 flex items-center"
               >
                 {showPassword ? (
-                  <AiFillEyeInvisible className="text-gray-400" size={18} />
+                  <AiFillEyeInvisible className="text-gray-700" size={18} />
                 ) : (
-                  <AiFillEye className="text-gray-400" size={18} />
+                  <AiFillEye className="text-gray-700" size={18} />
                 )}
               </button>
             </div>
             <div className="flex flex-col justify-start items-start mt-6">
               <Button
-                className="mt-6 text-lg font-semibold text-center bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+                className="mt-6 text-lg font-semibold text-center bg-orange-700 text-customBgLight3 rounded-lg hover:bg-orange-800"
                 onClick={handleLogin}
                 disabled={isLoading}
               >
@@ -155,7 +155,7 @@ export const Login: React.FC = () => {
             <div className="mt-5">
               <a
                 href="/register"
-                className="text-orange-500 hover:text-orange-700 "
+                className="text-orange-700 hover:text-orange-700 "
               >
                 Não possui conta? Registre-se
               </a>

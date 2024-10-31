@@ -133,9 +133,9 @@ export const Register: React.FC = () => {
     }
   };
   return (
-    <div className="w-full min-h-screen bg-customBg relative">
+    <div className="w-full min-h-screen bg-customBgLight3 relative">
       <div className="flex items-center justify-center min-h-screen relative">
-        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-white bg-opacity-5 rounded-lg">
+        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl flex flex-col justify-center items-center p-8 bg-customBgLight2  shadow-2xl rounded-lg">
         <a href="/">
         <img
             src={logoOrange}
@@ -145,8 +145,8 @@ export const Register: React.FC = () => {
           />
         </a>
           <div className="text-center mb-6">
-            <h1 className="text-4xl font-bold text-orange-600">Criar Conta</h1>
-            <p className="mt-2 text-gray-400">Preencha os campos para criar uma conta.</p>
+            <h1 className="text-4xl font-bold text-orange-700">Criar Conta</h1>
+            <p className="mt-2 text-gray-700">Preencha os campos para criar uma conta.</p>
           </div>
           <div className="w-full">
             <InputForm
@@ -180,9 +180,9 @@ export const Register: React.FC = () => {
                 className="absolute inset-y-0 right-0 pr-3 pt-6 flex items-center"
               >
                 {showPassword ? (
-                  <AiFillEyeInvisible className="text-gray-400" size={18} />
+                  <AiFillEyeInvisible className="text-gray-700" size={18} />
                 ) : (
-                  <AiFillEye className="text-gray-400" size={18} />
+                  <AiFillEye className="text-gray-700" size={18} />
                 )}
               </button>
 
@@ -190,11 +190,11 @@ export const Register: React.FC = () => {
             </div>
             <AiOutlineInfoCircle
                 data-tooltip-id="passwordInfo"
-                className=" transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                className=" transform -translate-y-1/2 text-gray-700 cursor-pointer"
                 size={18}
               />
 
-              <Tooltip id="passwordInfo"  className="text-sm">
+              <Tooltip id="passwordInfo"  className="text-lg">
                 <ul className="list-disc space-y-1 pl-4">
                   <li className={passwordValidations.length ? 'text-green-500' : 'text-red-500'}>
                     {passwordValidations.length ? '✔' : '✘'} 8 a 16 caracteres
@@ -228,7 +228,7 @@ export const Register: React.FC = () => {
             </div>
             <div className="flex flex-col justify-start items-start mt-6">
               <Button
-                className="mt-6 text-lg font-semibold text-center bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+                className="mt-6 text-lg font-semibold text-center bg-orange-700 text-white rounded-lg hover:bg-orange-800"
                 onClick={handleRegister}
                 disabled={isLoading}
               >
@@ -246,7 +246,7 @@ export const Register: React.FC = () => {
             <div className="mt-5">
               <a
                 href="/"
-                className="text-orange-500 hover:text-orange-700 "
+                className="text-orange-700 hover:text-orange-700 "
               >
                 Já possui conta? Entre
               </a>

@@ -11,13 +11,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-customInput">
-      <div className={`${isOpen ? 'w-64' : 'w-20'} transition-all duration-300`}>
-        <Sidebar isOpen={isOpen} className="hidden md:flex" />
-      </div>
-      <div className="flex-1 flex flex-col">
+    <div className="flex h-screen w-screen bg-customBgLight">
+      <Sidebar isOpen={isOpen} />
+      <div className="flex-1 flex flex-col ml-20">
         <Navbar toggleSidebar={toggleSidebar} />
-        <main className="flex-grow w-full mt-16 h-full overflow-y-auto scrollbar scrollbar-thumb-customInput scrollbar-track-transparent scrollbar-thumb-rounded">
+        <main className="flex-grow w-full h-full overflow-y-auto mt-20 scrollbar scrollbar-thumb-customInput scrollbar-track-transparent scrollbar-thumb-rounded">
           {children}
         </main>
       </div>

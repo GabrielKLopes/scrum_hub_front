@@ -27,49 +27,49 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
 
   return (
     <div
-      className={`bg-customBg h-screen flex flex-col items-center p-4 duration-300 ${isOpen ? 'w-64' : 'w-20'} shadow-xl hidden md:flex`}
+      className={`bg-customBgLight2 h-screen flex flex-col items-center p-4 duration-300 ${isOpen ? 'w-64' : 'w-20'} shadow-xl hidden md:flex`}
       style={{
         paddingTop: '4rem',
         transition: 'width 0.3s ease, padding 0.3s ease',
       }}
     >
       <ul className="w-full mt-5 space-y-4">
-        <li className="flex items-center space-x-4 p-2 hover:bg-customInput hover:rounded-lg transition-all">
-          <FaHome className="text-orange-500 text-2xl" />
-          <span className={`text-orange-500 text-lg ${!isOpen && 'hidden'}`}>
+      <li className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer">
+      <FaHome className="text-orange-700 text-2xl" />
+          <span className={`text-orange-700 text-lg ${!isOpen && 'hidden'}`}>
             Inicio
           </span>
         </li>
-        <li className="flex items-center space-x-4 p-2 hover:bg-customInput hover:rounded-lg transition-all" onClick={handleSettingsClick}>
-          <FaGear className="text-orange-500 text-2xl" />
-          <span className={`text-orange-500 text-lg ${!isOpen && 'hidden'}`}>
+        <li className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer" onClick={handleSettingsClick}>
+          <FaGear className="text-orange-700 text-2xl" />
+          <span className={`text-orange-700 text-lg ${!isOpen && 'hidden'}`}>
             Configurações
           </span>
         </li>
         {permissionId === 1 && (
-          <li className="flex items-center space-x-4 p-2 hover:bg-customInput hover:rounded-lg transition-all" onClick={handleUsers}>
-            <FaUser className="text-orange-500 text-2xl" />
-            <span className={`text-orange-500 text-lg ${!isOpen && 'hidden'}`}>
+          <li className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer" onClick={handleUsers}>
+            <FaUser className="text-orange-700 text-2xl" />
+            <span className={`text-orange-700 text-lg ${!isOpen && 'hidden'}`}>
               Usuários
             </span>
           </li>
         )}
         <li
-          className="flex items-center space-x-4 p-2 hover:bg-customInput hover:rounded-lg transition-all cursor-pointer"
+          className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer"
           onClick={handleLogout}
         >
-          <FaSignOutAlt className="text-orange-500 text-2xl" />
-          <span className={`text-orange-500 text-lg ${!isOpen && 'hidden'}`}>
+          <FaSignOutAlt className="text-orange-700 text-2xl" />
+          <span className={`text-orange-700 text-lg ${!isOpen && 'hidden'}`}>
             Sair
           </span>
         </li>
       </ul>
       <div className={`mt-auto flex items-center ${isOpen ? 'p-4' : 'p-2'}`}>
-        <div className={`rounded-full bg-orange-500 flex items-center justify-center transition-all ${isOpen ? 'w-16 h-16' : 'w-12 h-12'}`}>
-          <span className="text-white text-2xl">G</span>
+        <div className={`rounded-full bg-orange-700 flex items-center justify-center transition-all ${isOpen ? 'w-16 h-16' : 'w-12 h-12'}`}>
+          <span className="text-gray-300 text-2xl">G</span>
         </div>
         {isOpen && (
-          <div className="ml-3 flex flex-col text-white">
+          <div className="ml-3 flex flex-col text-gray-700">
             <p className="text-lg">{username}</p>
             <p className="text-sm">{userType}</p>
           </div>

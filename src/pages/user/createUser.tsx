@@ -106,11 +106,11 @@ const CreateUserPage: React.FC = () => {
   return (
     <Layout>
       <div className="p-4 min-h-full">
-        <h2 className="text-2xl text-orange-500 font-semibold mb-4 text-left mt-10">
+        <h2 className="text-2xl text-orange-700 font-semibold mb-4 text-left mt-10">
           Novo Usuário
         </h2>
         {formError && (
-          <p className="text-red-500 mb-4 text-center">{formError}</p>
+          <p className="text-red-700 mb-4 text-center">{formError}</p>
         )}
 
         <Notification
@@ -185,7 +185,7 @@ const CreateUserPage: React.FC = () => {
         <div className="flex flex-col md:flex-row w-full gap-4 mt-6 justify-center">
           <Button
             onClick={handleSave}
-            className="bg-customBg border border-transparent text-orange-500 rounded-lg p-2 w-full md:w-auto hover:border-orange-500"
+            className="bg-customBgLight4 border border-transparent text-orange-700 rounded-lg p-2 w-full md:w-auto hover:border-orange-700"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -201,7 +201,7 @@ const CreateUserPage: React.FC = () => {
 
           <Button
             onClick={() => navigate("/users")}
-            className="bg-customBg border border-transparent text-red-500 rounded-lg p-2 w-full md:w-auto hover:border-red-500"
+            className="bg-customBgLight4 border text-red-700 rounded-lg p-2 w-full md:w-auto hover:border-red-700"
           >
             Cancelar
           </Button>

@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { IUser, IUserCreate } from "../interface/user";
+import { IUser, IUserCreate, IUserUpdate } from "../interface/user";
 import { api } from "./api.service";
 
 export const UserService = {
@@ -34,6 +34,25 @@ export const UserService = {
       throw new Error('Falha ao obter usuário');
     }
   },
+
+  updateUser: async (token: string, userId: number, userData: IUserUpdate): Promise<IUser> => {
+    try {
+        console.log("Atualizando usuário com os dados:", userData);
+        const response = await api.put<IUser>(`/session/user/create/${userId}`, userData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log("Resposta da API:", response.data);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            throw new Error(error.response.data.message || 'Falha ao atualizar usuário');
+        }
+        throw new Error('Falha ao atualizar usuário');
+    }
+},
+
 
   createUser: async (token: string, userData: IUserCreate): Promise<IUser> => {
     try {

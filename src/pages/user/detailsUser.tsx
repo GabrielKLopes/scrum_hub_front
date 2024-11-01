@@ -57,6 +57,7 @@ const DetailsUser: React.FC = () => {
 
   useEffect(() => {
     fetchUserDetails();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleGoBack = () => {
@@ -69,33 +70,39 @@ const DetailsUser: React.FC = () => {
 
   const handleSelectChange = (field: string, value: number) => {
     if (!user) return;
-
+  
     const updatedUser = { ...user };
-
+  
     switch (field) {
       case "squad":
-        // eslint-disable-next-line no-case-declarations
-        const selectedSquad = squads.find(squad => squad.squad_id === value);
+        { const selectedSquad = squads.find(squad => squad.squad_id === value);
         updatedUser.squad = {
           ...updatedUser.squad,
           squad_id: value,
-          name: selectedSquad ? selectedSquad.name : updatedUser.squad.name
+          name: selectedSquad?.name ?? updatedUser.squad?.name ?? ""
         };
-        break;
+        break; }
       case "permission":
-        updatedUser.permission.permission_id = value;
-        updatedUser.permission.name = permissionOptions.find(option => option.value === value)?.label || updatedUser.permission.name;
+        if (updatedUser.permission) {
+          updatedUser.permission.permission_id = value;
+          updatedUser.permission.name = 
+            permissionOptions.find(option => option.value === value)?.label ?? updatedUser.permission.name;
+        }
         break;
       case "permissionUser":
-        updatedUser.permissionUser.permissionUser_id = value;
-        updatedUser.permissionUser.name = permissionUserOptions.find(option => option.value === value)?.label || updatedUser.permissionUser.name;
+        if (updatedUser.permissionUser) {
+          updatedUser.permissionUser.permissionUser_id = value;
+          updatedUser.permissionUser.name = 
+            permissionUserOptions.find(option => option.value === value)?.label ?? updatedUser.permissionUser.name;
+        }
         break;
       default:
         break;
     }
-
+  
     setUser(updatedUser); 
   };
+  
 
   const handleSave = async () => {
     if (!user) {
@@ -114,19 +121,19 @@ const DetailsUser: React.FC = () => {
         ...user,
         squad: {
           ...user.squad,
-          squad_id: user.squad.squad_id
+          squad_id: user.squad?.squad_id
         },
         permission: {
           ...user.permission,
-          permission_id: user.permission.permission_id
+          permission_id: user.permission?.permission_id
         },
         permissionUser: {
           ...user.permissionUser,
-          permissionUser_id: user.permissionUser.permissionUser_id
+          permissionUser_id: user.permissionUser?.permissionUser_id
         }
       };
 
-      await UserService.updateUser(token, user.id, updatedUserData);
+      await UserService.updateUser(token, user.user_id, updatedUserData);
 
       setNotificationMessage("Usuário atualizado com sucesso!");
       setNotificationType("success");
@@ -204,15 +211,7 @@ const DetailsUser: React.FC = () => {
             )}
           </button>
             <div className="w-16 h-16 bg-orange-700 rounded-full flex-shrink-0 flex items-center justify-center text-2xl text-customBgLight3 shadow-lg font-semibold mr-4">
-              {user.photo ? (
-                <img
-                  src={user.photo}
-                  alt={`${user.name}'s photo`}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
                 (user.name || "").charAt(0)
-              )}
             </div>
             <div>
               <h2 className="text-xl font-semibold text-orange-600 mr-4">

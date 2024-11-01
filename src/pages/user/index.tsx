@@ -49,7 +49,7 @@ const User: React.FC = () => {
       setIsDeleting(true);
       try {
         await UserService.deleteUser(token, userId);
-        setUsers(users.filter((user) => user.id !== userId));
+        setUsers(users.filter((user) => user.user_id !== userId));
         setIsModalOpen(false);
         setActionMenuOpen(null);
         setNotificationMessage("Usuário deletado com sucesso!");
@@ -73,7 +73,6 @@ const User: React.FC = () => {
     setSelectedUserId(null);
     setIsModalOpen(false);
   };
-
 
   useEffect(() => {
     fetchUsers();
@@ -110,20 +109,12 @@ const User: React.FC = () => {
           <div className="mt-4 grid grid-cols-1 gap-4">
             {users.map((user) => (
               <div
-                key={user.id}
-                onClick={() => navigate(`/details-user/${user.id}`)}
+                key={user.user_id}
+                onClick={() => navigate(`/details-user/${user.user_id}`)}
                 className="p-4 rounded-lg cursor-pointer shadow-xl bg-customBgLight3 transition-transform duration-150 transform hover:scale-x-95 hover:border-orange-700 border border-transparent relative"
               >
                 <div className="w-12 h-12 bg-orange-700 rounded-full flex-shrink-0 flex items-center justify-center text-lg text-white font-semibold mr-4">
-                  {user.photo ? (
-                    <img
-                      src={user.photo}
-                      alt={`${user.name || "Usuário"}'s photo`}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  ) : (
-                    (user.name || "").charAt(0)
-                  )}
+                  (user.name || "").charAt(0)
                 </div>
                 <div className="flex flex-col text-left">
                   <p className="font-semibold text-2xl text-orange-600">
@@ -136,10 +127,13 @@ const User: React.FC = () => {
                   </p>
                 </div>
                 <div className="absolute top-4 right-4">
-                <FaTrash  className="text-orange-700 h-5 w-5" onClick={(e) => {
-                          e.stopPropagation(); 
-                          openModal(user.id);
-                        }} />
+                  <FaTrash
+                    className="text-orange-700 h-5 w-5"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(user.user_id);
+                    }}
+                  />
                 </div>
               </div>
             ))}

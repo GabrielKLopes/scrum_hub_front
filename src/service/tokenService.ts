@@ -11,7 +11,8 @@ export const getUserDataFromToken = () => {
         return {
             permissionId: decoded.permission?.permission_id || null, 
             username: decoded.username,
-            userType: decoded.permission?.name || 'Desconhecido' 
+            userType: decoded.permission?.name || 'Desconhecido',
+            permissionUserId: decoded.permissionUser?.permissionUser_id || null
         };
     } catch (error) {
         console.error("Erro ao decodificar o token:", error);

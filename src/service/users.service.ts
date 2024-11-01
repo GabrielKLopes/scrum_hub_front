@@ -5,17 +5,20 @@ import { api } from "./api.service";
 export const UserService = {
   getAll: async (token: string): Promise<IUser[]> => {
     try {
-      const response = await api.get<IUser[]>('/session/user/create', {
+      const response = await api.get<IUser[]>("/session/user", {
         headers: {
-          Authorization: `Bearer ${token}`,  
+          Authorization: `Bearer ${token}`,
         },
       });
       return response.data;
     } catch (error) {
+      console.error("Erro ao obter usuários:", error);
       if (error instanceof AxiosError && error.response) {
-        throw new Error(error.response.data.message || 'Falha ao obter usuários');
+        throw new Error(
+          error.response.data.message || "Falha ao obter usuários"
+        );
       }
-      throw new Error('Falha ao obter usuários');
+      throw new Error("Falha ao obter usuários");
     }
   },
 
@@ -29,34 +32,17 @@ export const UserService = {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        throw new Error(error.response.data.message || 'Falha ao obter usuário');
+        throw new Error(
+          error.response.data.message || "Falha ao obter usuário"
+        );
       }
-      throw new Error('Falha ao obter usuário');
+      throw new Error("Falha ao obter usuário");
     }
   },
 
-  updateUser: async (token: string, userId: number, userData: IUserUpdate): Promise<IUser> => {
-    try {
-        console.log("Atualizando usuário com os dados:", userData);
-        const response = await api.put<IUser>(`/session/user/create/${userId}`, userData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        console.log("Resposta da API:", response.data);
-        return response.data;
-    } catch (error) {
-        if (error instanceof AxiosError && error.response) {
-            throw new Error(error.response.data.message || 'Falha ao atualizar usuário');
-        }
-        throw new Error('Falha ao atualizar usuário');
-    }
-},
-
-
   createUser: async (token: string, userData: IUserCreate): Promise<IUser> => {
     try {
-      const response = await api.post<IUser>('/session/user/create', userData, {
+      const response = await api.post<IUser>("/session/user/create", userData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,9 +50,11 @@ export const UserService = {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        throw new Error(error.response.data.message || 'Falha ao criar usuário');
+        throw new Error(
+          error.response.data.message || "Falha ao criar usuário"
+        );
       }
-      throw new Error('Falha ao criar usuário');
+      throw new Error("Falha ao criar usuário");
     }
   },
 
@@ -80,9 +68,37 @@ export const UserService = {
     } catch (error) {
       console.error(error);
       if (error instanceof AxiosError && error.response) {
-        throw new Error(error.response.data.message || 'Falha ao deletar usuário');
+        throw new Error(
+          error.response.data.message || "Falha ao deletar usuário"
+        );
       }
-      throw new Error('Falha ao deletar usuário');
+      throw new Error("Falha ao deletar usuário");
+    }
+  },
+
+  updateUser: async (
+    token: string,
+    userId: number,
+    userData: IUserUpdate
+  ): Promise<IUser> => {
+    try {
+      const response = await api.put<IUser>(
+        `/session/user/${userId}`,
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(
+          error.response.data.message || "Falha ao atualizar usuário"
+        );
+      }
+      throw new Error("Falha ao atualizar usuário");
     }
   },
 };

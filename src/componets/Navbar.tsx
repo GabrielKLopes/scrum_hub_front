@@ -25,7 +25,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         &#9776;
       </button>
       
-      {/* Centralizando o campo de pesquisa */}
       <div className="flex-1 mx-4 flex justify-center">
         <SearchInput value={searchQuery} onChange={handleSearchChange} />
       </div>

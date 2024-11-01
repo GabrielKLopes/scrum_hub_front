@@ -28,33 +28,33 @@ export interface IUserPermissionUser {
 }
 
 export interface IUser {
-  photo: any;
-  id: number; 
+  user_id?: number; 
   name: string;
-  email: string; 
-  creator: {
+  email?: string; 
+  creator?: {
     user_id: number;
     name: string;
     email: string;
   };
-  permission: {
+  permission?: {
     name: string;
     permission_id: number;
     type: boolean;
   };
-  permissionUser: {
+  permissionUser?: {
     createValue: boolean;
     deleteValue: boolean;
     updateValue: boolean;
     name: string;
     permissionUser_id: number;
   };
-  squad: {
+  squad?: {
     name: string;
     squad_id: number;
   };
-  created_at: string;
+  created_at?: string;
 }
+
 
 export interface IUserCreate {
   name: string;
@@ -74,3 +74,4 @@ export interface IUserUpdate {
   permission_id?: number;
   squad_id?: number;
 }
+

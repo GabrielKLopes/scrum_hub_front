@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import { ISquad, ISquadCreate } from "../interface/squads";
 import { api } from "./api.service";
 import { UserService } from "./users.service";
-import { IUser } from "../interface/user";
 
 export const SquadService = {
   async getAllSquads(token: string): Promise<ISquad[]> {

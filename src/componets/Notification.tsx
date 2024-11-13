@@ -4,7 +4,7 @@ interface NotificationProps {
   visible: boolean;
   message: string;
   type: 'success' | 'error';
-  onClose?: () => void; // Adicione esta linha
+  onClose?: () => void;
 
 }
 

@@ -28,50 +28,49 @@ export interface IUserPermissionUser {
 }
 
 export interface IUser {
-  user_id: number; 
+  user_id: number;
   name: string;
-  email?: string; 
+  email?: string;
   creator?: {
     user_id: number;
     name: string;
     email: string;
   };
   permission?: {
-    name: string;
     permission_id: number;
-    type: boolean;
+    name:string;
   };
   permissionUser?: {
-    createValue: boolean;
-    deleteValue: boolean;
-    updateValue: boolean;
-    name: string;
     permissionUser_id: number;
+    name:string;
   };
   squad?: {
-    name: string;
     squad_id: number;
+    name?:string;
   };
   created_at?: string;
 }
-
 
 export interface IUserCreate {
   name: string;
   email: string;
   password: string;
-  permissionUser_id: number; 
-  permission_id: number;      
-  squad_id: number;          
+  permissionUser_id: number;
+  permission_id: number;
+  squad_id: number;
 }
-
 
 export interface IUserUpdate {
-  name?: string; 
+  name?: string;
   email?: string;
   password?: string;
-  permissionUser_id?: number;
-  permission_id?: number;
-  squad_id?: number;
+  permission?: {
+    permission_id: number;
+  };
+  permissionUser?: {
+    permissionUser_id: number;
+  };
+  squad?: {
+    squad_id: number;
+  };
 }
-

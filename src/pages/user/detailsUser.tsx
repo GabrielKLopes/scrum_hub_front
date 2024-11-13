@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IUser } from "../../interface/user";
+import { IUser, IUserUpdate } from "../../interface/user";
 import { UserService } from "../../service/users.service";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../componets/Layout";
@@ -15,25 +15,41 @@ const DetailsUser: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser | null>(null);
+  const [squads, setSquads] = useState<ISquad[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [openSelectId, setOpenSelectId] = useState<number | null>(null);
-  const [squads, setSquads] = useState<ISquad[]>([]);
-  const [notificationVisible, setNotificationVisible] = useState<boolean>(false);
+  const [notificationVisible, setNotificationVisible] =
+    useState<boolean>(false);
   const [notificationMessage, setNotificationMessage] = useState<string>("");
-  const [notificationType, setNotificationType] = useState<"success" | "error">("success");
+  const [notificationType, setNotificationType] = useState<"success" | "error">(
+    "success"
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [updatedFields, setUpdatedFields] = useState<Partial<IUser>>({});
 
-  const fetchUserDetails = async () => {
+  const fetchInitialData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("tokenSecurity");
+      const token = localStorage.getItem("tokenSecurity") || "";
+
       if (token && id) {
         const userData = await UserService.getById(token, parseInt(id));
-        setUser(userData);
+        if (userData && "user" in userData) {
+          setUser(userData.user as IUser);
+        } else if (userData) {
+          setUser(userData as IUser);
+        } else {
+          throw new Error("Dados do usuário não encontrados");
+        }
+
+        const squadsData = await SquadService.getAllSquads(token);
+        setSquads(squadsData);
       } else {
-        throw new Error("Token de autenticação ou ID de usuário não encontrado");
+        throw new Error(
+          "Token de autenticação ou ID de usuário não encontrado"
+        );
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro desconhecido");
@@ -43,21 +59,7 @@ const DetailsUser: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchSquads = async () => {
-      try {
-        const token = localStorage.getItem("tokenSecurity") || "";
-        const squadsData = await SquadService.getAllSquads(token);
-        setSquads(squadsData);
-      } catch (error) {
-        setError(error instanceof Error ? error.message : "Erro desconhecido");
-      }
-    };
-    fetchSquads();
-  }, []);
-
-  useEffect(() => {
-    fetchUserDetails();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchInitialData();
   }, [id]);
 
   const handleGoBack = () => {
@@ -70,39 +72,49 @@ const DetailsUser: React.FC = () => {
 
   const handleSelectChange = (field: string, value: number) => {
     if (!user) return;
-  
+
     const updatedUser = { ...user };
-  
+
     switch (field) {
       case "squad":
-        { const selectedSquad = squads.find(squad => squad.squad_id === value);
         updatedUser.squad = {
           ...updatedUser.squad,
           squad_id: value,
-          name: selectedSquad?.name ?? updatedUser.squad?.name ?? ""
         };
-        break; }
+        setUpdatedFields((prev) => ({ ...prev, squad_id: value }));
+        break;
+
       case "permission":
-        if (updatedUser.permission) {
-          updatedUser.permission.permission_id = value;
-          updatedUser.permission.name = 
-            permissionOptions.find(option => option.value === value)?.label ?? updatedUser.permission.name;
-        }
+        updatedUser.permission = {
+          ...updatedUser.permission,
+          permission_id: value,
+          name: "",
+        };
+        setUpdatedFields((prev) => ({ ...prev, permission_id: value }));
         break;
+
       case "permissionUser":
-        if (updatedUser.permissionUser) {
-          updatedUser.permissionUser.permissionUser_id = value;
-          updatedUser.permissionUser.name = 
-            permissionUserOptions.find(option => option.value === value)?.label ?? updatedUser.permissionUser.name;
-        }
+        updatedUser.permissionUser = {
+          ...updatedUser.permissionUser,
+          permissionUser_id: value,
+          name: "",
+        };
+        setUpdatedFields((prev) => ({ ...prev, permissionUser_id: value }));
         break;
+
       default:
         break;
     }
-  
-    setUser(updatedUser); 
+
+    setUser(updatedUser);
   };
-  
+
+  const handleInputChange = (field: keyof IUser, value: string) => {
+    if (!user) return;
+
+    setUser((prevUser) => (prevUser ? { ...prevUser, [field]: value } : null));
+    setUpdatedFields((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSave = async () => {
     if (!user) {
@@ -112,32 +124,37 @@ const DetailsUser: React.FC = () => {
       return;
     }
 
-    setIsLoading(true); 
+    setIsLoading(true);
     setNotificationVisible(false);
 
     try {
       const token = localStorage.getItem("tokenSecurity") || "";
-      const updatedUserData = {
-        ...user,
-        squad: {
-          ...user.squad,
-          squad_id: user.squad?.squad_id
-        },
-        permission: {
-          ...user.permission,
-          permission_id: user.permission?.permission_id
-        },
-        permissionUser: {
-          ...user.permissionUser,
-          permissionUser_id: user.permissionUser?.permissionUser_id
-        }
+
+      const payload: IUserUpdate = {
+        ...updatedFields,
+        permission: updatedFields.permission?.permission_id
+          ? { permission_id: updatedFields.permission.permission_id }
+          : undefined,
+        permissionUser: updatedFields.permissionUser?.permissionUser_id
+          ? {
+              permissionUser_id: updatedFields.permissionUser.permissionUser_id,
+            }
+          : undefined,
       };
 
-      await UserService.updateUser(token, user.user_id, updatedUserData);
+      const response = await UserService.updateUser(
+        token,
+        user.user_id,
+        payload
+      );
+
+      setUser(response);
+      setUpdatedFields({});
 
       setNotificationMessage("Usuário atualizado com sucesso!");
       setNotificationType("success");
       setNotificationVisible(true);
+
       setTimeout(() => navigate(-1), 2000);
     } catch (error) {
       setNotificationMessage(
@@ -148,7 +165,7 @@ const DetailsUser: React.FC = () => {
       setNotificationType("error");
       setNotificationVisible(true);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -190,13 +207,12 @@ const DetailsUser: React.FC = () => {
       ) : user ? (
         <>
           <div className="flex items-center justify-center mb-4 flex-col">
-          <button
-            onClick={isEditing ? handleSave : handleEditToggle}
-            className="ml-auto text-white bg-orange-700 hover:bg-orange-700 font-semibold py-2 px-4 rounded mr-5 w-40"
-          >
-            {isEditing ? (
-              <>
-                {isLoading ? (
+            <button
+              onClick={isEditing ? handleSave : handleEditToggle}
+              className="ml-auto text-white bg-orange-700 hover:bg-orange-700 font-semibold py-2 px-4 rounded mr-5 w-40"
+            >
+              {isEditing ? (
+                isLoading ? (
                   <span className="flex items-center justify-center space-x-1">
                     <span className="animate-bounce text-2xl">•</span>
                     <span className="animate-bounce text-2xl">•</span>
@@ -204,33 +220,30 @@ const DetailsUser: React.FC = () => {
                   </span>
                 ) : (
                   "Salvar"
-                )}
-              </>
-            ) : (
-              "Editar"
-            )}
-          </button>
+                )
+              ) : (
+                "Editar"
+              )}
+            </button>
             <div className="w-16 h-16 bg-orange-700 rounded-full flex-shrink-0 flex items-center justify-center text-2xl text-customBgLight3 shadow-lg font-semibold mr-4">
-                (user.name || "").charAt(0)
+              {user.name?.charAt(0) || ""}
             </div>
-            <div>
-              <h2 className="text-xl font-semibold text-orange-600 mr-4">
-                {user.name}
-              </h2>
-            </div>
+            <h2 className="text-xl font-semibold text-orange-600 mr-4">
+              {user.name}
+            </h2>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <InputForm
               label="Nome"
               value={user.name || ""}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              onChange={(e) => handleInputChange("name", e.target.value)}
               type="text"
               readOnly={!isEditing}
             />
             <InputForm
               label="Email"
               value={user.email || ""}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              onChange={(e) => handleInputChange("email", e.target.value)}
               type="email"
               readOnly={!isEditing}
             />
@@ -238,43 +251,46 @@ const DetailsUser: React.FC = () => {
           <div className="grid grid-cols-3 gap-4">
             <SelectForm
               id={1}
-              value={user.squad ? user.squad.squad_id : 0}
+              value={user?.squad?.squad_id ?? undefined}
+              options={squadOptions}
               onChange={(value) => handleSelectChange("squad", value)}
               label="Squad"
-              options={squadOptions}
+              readOnly={true}
               isOpen={openSelectId === 1}
-              setOpenId={setOpenSelectId}
-              readOnly={!isEditing}
+              setOpenId={(open) => setOpenSelectId(open ? 1 : null)}
+              disabled={true}
             />
+
             <SelectForm
               id={2}
-              value={user.permission ? user.permission.permission_id : 0}
-              onChange={(value) => handleSelectChange("permission", value)}
-              label="Função"
+              value={user.permission?.permission_id || 0}
               options={permissionOptions}
-              isOpen={openSelectId === 2}
-              setOpenId={setOpenSelectId}
+              onChange={(value) => handleSelectChange("permission", value)}
+              label="Permissão"
               readOnly={!isEditing}
+              isOpen={openSelectId === 2}
+              setOpenId={(open) => setOpenSelectId(open ? 2 : null)}
             />
             <SelectForm
               id={3}
-              value={user.permissionUser ? user.permissionUser.permissionUser_id : 0}
-              onChange={(value) => handleSelectChange("permissionUser", value)}
-              label="Tipo de Permissão"
+              value={user.permissionUser?.permissionUser_id || 0}
               options={permissionUserOptions}
-              isOpen={openSelectId === 3}
-              setOpenId={setOpenSelectId}
+              onChange={(value) => handleSelectChange("permissionUser", value)}
+              label="Permissão do Usuário"
               readOnly={!isEditing}
+              isOpen={openSelectId === 3}
+              setOpenId={(open) => setOpenSelectId(open ? 3 : null)}
             />
           </div>
         </>
       ) : (
-        <p className="text-red-700">Usuário não encontrado</p>
+        <p className="text-gray-700">Usuário não encontrado</p>
       )}
       <Notification
         visible={notificationVisible}
-        message={notificationMessage}
         type={notificationType}
+        message={notificationMessage}
+        onClose={() => setNotificationVisible(false)}
       />
     </Layout>
   );

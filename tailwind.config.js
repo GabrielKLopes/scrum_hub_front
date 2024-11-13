@@ -12,7 +12,7 @@ export default {
         customBgLight: '#F1F1F1',
         customBgLight2: '#F2F2F2',
         customBgLight3: '#E4E4E4',
-        customBgLight4: '#DBDBDB',
+        customBgLight4: '#DBDADAF1',
         customColor1: '#160b00',
         customColor2: '#c26b00',
         customColor3: '#7a4400',

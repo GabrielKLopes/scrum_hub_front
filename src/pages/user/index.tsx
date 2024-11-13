@@ -114,7 +114,7 @@ const User: React.FC = () => {
                 className="p-4 rounded-lg cursor-pointer shadow-xl bg-customBgLight3 transition-transform duration-150 transform hover:scale-x-95 hover:border-orange-700 border border-transparent relative"
               >
                 <div className="w-12 h-12 bg-orange-700 rounded-full flex-shrink-0 flex items-center justify-center text-lg text-white font-semibold mr-4">
-                  (user.name || "").charAt(0)
+                {user.name?.charAt(0) || ""}
                 </div>
                 <div className="flex flex-col text-left">
                   <p className="font-semibold text-2xl text-orange-600">

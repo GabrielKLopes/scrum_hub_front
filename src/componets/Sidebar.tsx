@@ -5,6 +5,7 @@ import { SidebarProps } from "../interface/components";
 import { getUserDataFromToken } from "../service/tokenService";
 import { useNavigate } from "react-router-dom";
 import { MdGroups } from "react-icons/md";
+import { GoProject } from "react-icons/go";
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const navigate = useNavigate();
@@ -22,10 +23,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
     navigate("/users");
   };
 
+  const handleHome = () =>{
+    navigate("/home")
+  }
   
   const handleSquads = () => {
     navigate("/squads");
   };
+
+  const handleProjects = () =>{
+    navigate("/projects")
+  }
 
   const permissionId = userData?.permissionId;
   const permissionUserId = userData?.permissionUserId;
@@ -43,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       }}
     >
       <ul className="w-full mt-5 space-y-4">
-        <li className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer">
+        <li className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer" onClick={handleHome}>
           <FaHome className="text-orange-700 text-2xl" />
           <span className={`text-orange-700 text-lg ${!isOpen && "hidden"}`}>
             Inicio
@@ -77,6 +85,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
             <MdGroups  className="text-orange-700 text-2xl" />
             <span className={`text-orange-700 text-lg ${!isOpen && "hidden"}`}>
               Squads
+            </span>
+          </li>
+        )}
+          {(permissionId === 1 || permissionUserId === 1) && (
+          <li
+            className="flex items-center space-x-4 p-2 hover:bg-customBgLight3 hover:rounded-lg transition-all cursor-pointer"
+            onClick={handleProjects}
+          >
+            <GoProject   className="text-orange-700 text-2xl" />
+            <span className={`text-orange-700 text-lg ${!isOpen && "hidden"}`}>
+              Projetos
             </span>
           </li>
         )}

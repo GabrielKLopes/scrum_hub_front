@@ -9,6 +9,9 @@ import User from "../pages/user";
 import CreateUserPage from "../pages/user/createUser";
 import DetailsUser from "../pages/user/detailsUser";
 import Squads from "../pages/squads";
+import DetailSquad from "../pages/squads/detailSquad";
+import Projects from "../pages/projects";
+import DetailProject from "../pages/projects/detailProject";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -16,7 +19,7 @@ export const AppRouter: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+
         <Route
           path="/home"
           element={
@@ -34,7 +37,7 @@ export const AppRouter: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/users"
           element={
@@ -61,11 +64,36 @@ export const AppRouter: React.FC = () => {
             </ProtectedRoute>
           }
         />
-          <Route
+        <Route
           path="/squads"
           element={
             <ProtectedRoute>
               <Squads />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/squads/:squadId"
+          element={
+            <ProtectedRoute>
+              <DetailSquad />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <ProtectedRoute>
+              <Projects />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/projects/:projectId"
+          element={
+            <ProtectedRoute>
+              <DetailProject />
             </ProtectedRoute>
           }
         />

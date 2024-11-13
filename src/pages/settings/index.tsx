@@ -1,7 +1,13 @@
 import React from 'react';
 import Layout from '../../componets/Layout';
+import UnderDevelopment from '../../componets/underDevelopment';
 
 const Settings: React.FC = () => {
+  const isUnderDevelopment = true; 
+
+  if (isUnderDevelopment) {
+    return <UnderDevelopment />;
+  }
   return (
     <Layout>
       <div className="p-6 h-full w-full flex flex-col">

@@ -66,12 +66,10 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
       setNotificationType("success");
       setNotificationVisible(true);
 
-      // Limpa os campos
       setProjectName("");
       setProjectDescription("");
       setSelectedSquad(null);
 
-      // Aguarda 2 segundos antes de fechar o modal
       setTimeout(() => {
         setNotificationVisible(false);
         onClose();

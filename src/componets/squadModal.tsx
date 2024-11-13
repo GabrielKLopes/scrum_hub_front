@@ -46,12 +46,10 @@ const CreateSquadModal: React.FC<CreateSquadModalProps> = ({
       setNotificationType("success");
       setNotificationVisible(true);
 
-      // Limpa os campos
       setSquadName("");
       setSelectedUsers([]);
       setSearchTerm("");
 
-      // Aguarda 2 segundos antes de fechar o modal
       setTimeout(() => {
         setNotificationVisible(false);
         onClose();
